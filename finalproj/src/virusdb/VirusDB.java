@@ -12,8 +12,8 @@ public class VirusDB {
     String url = "jdbc:derby://localhost:1527/VirusData";
     String user = "APP";
     String password = "APP";
-    String input;
-    String data;
+    String date;
+    String country;
     
     public String extractData(int choice, String date, String country){
         switch(choice){
@@ -44,7 +44,7 @@ public class VirusDB {
                     System.out.println(e);
                 }
                 return TotalCase;
-
+                
             case 3://determine new increased confirmed cases per day
                 String IncreasedCase = "";
                 try{
@@ -106,11 +106,19 @@ public class VirusDB {
         }
     }
     
-    public void setVariable(String input){
-        this.input = input;
+    public void setDate(String date){
+        this.date = date;
     }
     
-    public String getVariable(){
-        return this.input;
+    public String getDate(){
+        return this.date;
+    }
+
+    public void setCountry(String country){
+        this.country = country;
+    }
+    
+    public String getCountry(){
+        return this.country;
     }
 }
