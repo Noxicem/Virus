@@ -14,92 +14,95 @@ public class DB{
     String password = "APP";
     String date;
     String country;
+    String output = "";
     
     public String extractData(int choice, String date, String country){
         switch(choice){
-            case 1://determine the total death by date
-                String TotalRecovered = "";
+            case 1://determine total death by date
                 try{
                     Connection myConn = DriverManager.getConnection(url,user,password);  
                     Statement stmt = myConn.createStatement();
-                    String sql = "SELECT DEATHS FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
+                    String sql = "SELECT * FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
                     ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next())TotalRecovered = String.valueOf(rs.getString(1));
+                    if(rs.next())output = String.valueOf(rs.getString("DEATHS"));
+                    else output = "Not found";
                 }
                 catch (Exception e){
                     System.out.println(e);
                 }
-                return TotalRecovered;
+                return output;
                 
             case 2://determine current total confirmed cases per day
-                String TotalCase = "";
                 try{
                     Connection myConn = DriverManager.getConnection(url,user,password);  
                     Statement stmt = myConn.createStatement();
-                    String sql = "SELECT CONFIRMED FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
+                    String sql = "SELECT * FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
                     ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next())TotalCase = String.valueOf(rs.getString(2));
+                    if(rs.next())output = String.valueOf(rs.getString("CONFIRMED"));
+                    else output = "Not found";
                 }
                 catch (Exception e){
                     System.out.println(e);
                 }
-                return TotalCase;
+                return output;
                 
-            case 3://determine new increased confirmed cases per day
-                String IncreasedCase = "";
+
+                
+            case 3://determine growth rate per day
                 try{
                     Connection myConn = DriverManager.getConnection(url,user,password);  
                     Statement stmt = myConn.createStatement();
-                    String sql = "SELECT CONFIRMED FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
+                    String sql = "SELECT * FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
                     ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next())IncreasedCase = String.valueOf(rs.getString(2));//need calculation
+                    if(rs.next())output = String.valueOf(rs.getString("GROWTHRATE"));
+                    else output = "Not found";
                 }
                 catch (Exception e){
                     System.out.println(e);
                 }
-                return IncreasedCase;
+                return output;
                 
-            case 4://determine total reported death per day
-                String TotalDeaths = "";
-                try{
-                    Connection myConn = DriverManager.getConnection(url,user,password);  
-                    Statement stmt = myConn.createStatement();
-                    String sql = "SELECT DEATHS FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next())TotalDeaths = String.valueOf(rs.getString(2));
-                }
-                catch (Exception e){
-                    System.out.println(e);
-                }
-                return TotalDeaths;
-                
-            case 5://determine total cases in each country
-                String CountryCase = "";
+            case 4://determine conrfirmed cases in each country on 1/22/2020
                 try{
                     Connection myConn = DriverManager.getConnection(url,user,password);  
                     Statement stmt = myConn.createStatement();
                     String sql = "SELECT CONFIRMED FROM CORONAVIRUSCOUNTRIES WHERE COUNTRY = '" + country + "'";
                     ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next())CountryCase = String.valueOf(rs.getString(2));
+                    if(rs.next())output = String.valueOf(rs.getString("CONFIRMED"));
+                    else output = "Not found";
                 }
                 catch (Exception e){
                     System.out.println(e);
                 }
-                return CountryCase;
+                return output;
                
-            case 6://determine total recovered cases in each country
-                String CountryRecovered = "";
+            case 5://determine recovered cases in each country ON 1/22/2020
                 try{
                     Connection myConn = DriverManager.getConnection(url,user,password);  
                     Statement stmt = myConn.createStatement();
-                    String sql = "SELECT RECOVERED FROM CORONAVIRUSCOUNTRIES WHERE COUNTRY = '" + country + "'";
+                    String sql = "SELECT * FROM CORONAVIRUSCOUNTRIES WHERE COUNTRY = '" + country + "'";
                     ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next())CountryRecovered = String.valueOf(rs.getString(2));
+                    if(rs.next())output = String.valueOf(rs.getString("RECOVERED"));
+                    else output = "Not found";
                 }
                 catch (Exception e){
                     System.out.println(e);
                 }
-                return CountryRecovered;
+                return output;
+                
+            case 6://determine death cases in each country on 1/22/2020
+                try{
+                    Connection myConn = DriverManager.getConnection(url,user,password);  
+                    Statement stmt = myConn.createStatement();
+                    String sql = "SELECT * FROM CORONAVIRUSWORLD WHERE DATE = '" + date + "'";
+                    ResultSet rs = stmt.executeQuery(sql);
+                    if(rs.next())output = String.valueOf(rs.getString("DEATHS"));
+                    else output = "Not found";
+                }
+                catch (Exception e){
+                    System.out.println(e);
+                }
+                return output;                
                 
             default:
                 return null;
