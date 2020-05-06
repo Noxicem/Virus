@@ -29,6 +29,5 @@
     <%
             String output = (String) request.getAttribute("output");
             out.println(output);
-        }
         %>
 </html>
